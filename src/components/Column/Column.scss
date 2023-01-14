@@ -4,29 +4,12 @@
   width: 300px;
   height: calc(100vh - 40px - 50px - #{$gap});
   // height: calc(100% - #{$gap});
-  overflow-x: auto;
   // &:not(:first-child) {
   //   margin-left: $gap;
   // }
 
   margin-left: $gap;
-  &::-webkit-scrollbar {
-    -webkit-appearance: none;
-  }
 
-  &::-webkit-scrollbar:vertical {
-    border-top-left-radius: $column-border-radius;
-    border-top-right-radius: $column-border-radius;
-    height: auto;
-    width: 15px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: darken($color: $list-bg-color, $amount: 15);
-    border-right: 5px solid $list-bg-color;
-    border-radius: 8px;
-    background-clip: padding-box;
-  }
   > * {
     background-color: $list-bg-color;
     color: #333;
@@ -51,21 +34,50 @@
 
     border-bottom-left-radius: $column-border-radius;
     border-bottom-right-radius: $column-border-radius;
+    color: #888;
+
+    .footer-action {
+      margin-left: 5px;
+      cursor: pointer;
+      &:hover {
+        color: #333;
+      }
+    }
   }
   div.card-list {
     list-style-type: none;
     margin: 0;
-    max-height: calc(100% - #{$column-header-height}- #{$column-footer-height});
+    max-height: calc(
+      100% - #{$column-header-height} - #{$column-footer-height}
+    );
+
     overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+    }
+
+    &::-webkit-scrollbar:vertical {
+      width: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: darken($color: $list-bg-color, $amount: 20);
+      border-right: 5px solid $list-bg-color;
+      border-radius: 8px;
+      background-clip: padding-box;
+    }
 
     .card-ghost {
       transition: transform 0.18s ease;
       transform: rotate(5deg);
+      font-weight: bold;
     }
 
     .card-ghost-drop {
       transition: transform 0.18s ease-in-out;
       transform: rotateZ(0deg);
+      font-weight: 600;
     }
     .card-drop-preview {
       background-color: rgba(150, 150, 200, 0.1);
