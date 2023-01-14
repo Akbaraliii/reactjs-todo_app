@@ -5,10 +5,17 @@ const Card = (props) => {
 
   return (
     <>
-      <li className='card-item'>
-        {card.image && <img className='card-cover' src={card.image} />}
+      <div className='card-item'>
+        {card.image && (
+          // eslint-disable-next-line jsx-a11y/alt-text
+          <img
+            className='card-cover'
+            src={card.image}
+            onMouseDown={(event) => event.preventDefault()}
+          />
+        )}
         {card.title}
-      </li>
+      </div>
     </>
   );
 };
