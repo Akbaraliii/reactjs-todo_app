@@ -2,15 +2,104 @@ import './Column.scss';
 import Card from '../Card/Card';
 import { mapOrder } from '../../utilities/sort';
 import { Container, Draggable } from 'react-smooth-dnd';
+import Dropdown from 'react-bootstrap/Dropdown';
+import ConfirmModal from '../Common/ConfirmModal';
+import Form from 'react-bootstrap/Form';
+import { useEffect, useState, useRef } from 'react';
+import { MODAL_ACTION_CLOSE } from '../../utilities/constant';
+import { MODAL_ACTION_CONFIRM } from '../../utilities/constant';
 
 const Column = (props) => {
-  const { column, onCardDrop } = props;
+  const { column, onCardDrop, onUpdateColumn } = props;
   const cards = mapOrder(column.cards, column.cardOrder, 'id');
+  const [isShowModalDelete, setShowModalDelete] = useState(false);
+  const [titleColumn, setTitleColumn] = useState('');
+  const [isFirstClick, setIsFirstClick] = useState(true);
+  const inputRef = useRef(null);
+  useEffect(() => {
+    if (column && column.title) {
+      setTitleColumn(column.title);
+    }
+  }, [column.title]);
+
+  const toggleModal = () => setShowModalDelete(!isShowModalDelete);
+
+  const onModalAction = (type) => {
+    if (type === MODAL_ACTION_CLOSE) {
+      // DO NOTHING
+    }
+    if (type === MODAL_ACTION_CONFIRM) {
+      // REMOVE A COLUMN
+      const newColumn = {
+        ...column,
+        _destroy: true,
+      };
+      onUpdateColumn(newColumn);
+    }
+    toggleModal();
+  };
+
+  const selectAllText = (event) => {
+    setIsFirstClick(false);
+    if (isFirstClick) {
+      event.target.select();
+    } else {
+      inputRef.current.setSelectionRange(
+        titleColumn.length,
+        titleColumn.length
+      );
+    }
+
+    //event.target.select();
+  };
+
+  const handleClickOutside = () => {
+    //do somehting
+    setIsFirstClick(true);
+    const newColumn = {
+      ...column,
+      title: titleColumn,
+      _destroy: false,
+    };
+    onUpdateColumn(newColumn);
+  };
 
   return (
     <>
       <div className='column'>
-        <header className='column-drag-handle'>{column.title}</header>
+        <header className='column-drag-handle'>
+          <div className='column-title'>
+            <Form.Control
+              size={'sm'}
+              type='text'
+              value={titleColumn}
+              className='customize-input-column'
+              onClick={selectAllText}
+              onChange={(event) => setTitleColumn(event.target.value)}
+              spellCheck='false'
+              onBlur={handleClickOutside}
+              onMouseDown={(e) => e.preventDefault()}
+            />
+          </div>
+          <div className='column-dropdown'>
+            <Dropdown>
+              <Dropdown.Toggle
+                variant=''
+                id='dropdown-basic'
+                size='sm'
+              ></Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href='#'>Add card...</Dropdown.Item>
+                <Dropdown.Item onClick={toggleModal}>
+                  Remove this column...
+                </Dropdown.Item>
+                <Dropdown.Item href='#'>Something else</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </header>
+
         <div className='card-list'>
           <Container
             groupName='col'
@@ -43,6 +132,12 @@ const Column = (props) => {
           </div>
         </footer>
       </div>
+      <ConfirmModal
+        show={isShowModalDelete}
+        title={'Remove a column'}
+        content={`Are you sure to remove this column: <b>${column.title}</b> `}
+        onAction={onModalAction}
+      />
     </>
   );
 };
