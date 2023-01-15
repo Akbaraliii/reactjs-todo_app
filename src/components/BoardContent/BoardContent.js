@@ -51,12 +51,12 @@ const BoardContent = () => {
 
   const onCardDrop = (dropResult, columnId) => {
     if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-      console.log(
-        '>>> inside onCardDrop: ',
-        dropResult,
-        'with columnId=',
-        columnId
-      );
+      // console.log(
+      //   '>>> inside onCardDrop: ',
+      //   dropResult,
+      //   'with columnId=',
+      //   columnId
+      // );
 
       let newColumns = [...columns];
       let currentColumn = newColumns.find((column) => column.id === columnId);
@@ -134,38 +134,38 @@ const BoardContent = () => {
                 </Draggable>
               );
             })}
-
-          {isShowAddList === false ? (
-            <div
-              className='add-new-column'
-              onClick={() => setIsShowAddList(true)}
-            >
-              <i className='fa fa-plus icon'></i>Add another column
-            </div>
-          ) : (
-            <div className='content-add-column'>
-              <input
-                type='text'
-                className='form-control'
-                ref={inputRef}
-                value={valueInput}
-                onChange={(event) => setValueInput(event.target.value)}
-              />
-              <div className='group-btn'>
-                <button
-                  className='btn btn-success'
-                  onClick={() => handleAddList()}
-                >
-                  Add list
-                </button>
-                <i
-                  className='fa fa-times icon'
-                  onClick={() => setIsShowAddList(false)}
-                ></i>
-              </div>
-            </div>
-          )}
         </Container>
+
+        {isShowAddList === false ? (
+          <div
+            className='add-new-column'
+            onClick={() => setIsShowAddList(true)}
+          >
+            <i className='fa fa-plus icon'></i>Add another column
+          </div>
+        ) : (
+          <div className='content-add-column'>
+            <input
+              type='text'
+              className='form-control'
+              ref={inputRef}
+              value={valueInput}
+              onChange={(event) => setValueInput(event.target.value)}
+            />
+            <div className='group-btn'>
+              <button
+                className='btn btn-success'
+                onClick={() => handleAddList()}
+              >
+                Add list
+              </button>
+              <i
+                className='fa fa-times icon'
+                onClick={() => setIsShowAddList(false)}
+              ></i>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
