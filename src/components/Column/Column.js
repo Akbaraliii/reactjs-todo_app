@@ -95,7 +95,8 @@ const Column = (props) => {
 
     onUpdateColumn(newColumn);
     setValueTextArea('');
-    setIsShowAddNewCard(false);
+    setIsShowAddNewCard(true);
+    textAreaRef.current.focus();
   };
   return (
     <>
@@ -123,11 +124,9 @@ const Column = (props) => {
               ></Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href='#'>Add card...</Dropdown.Item>
                 <Dropdown.Item onClick={toggleModal}>
                   Remove this column...
                 </Dropdown.Item>
-                <Dropdown.Item href='#'>Something else</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

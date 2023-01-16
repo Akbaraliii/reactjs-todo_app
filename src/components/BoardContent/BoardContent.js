@@ -80,7 +80,7 @@ const BoardContent = () => {
       if (inputRef && inputRef.current) inputRef.current.focus();
       return;
     }
-    //update board columns
+    //UPDATE BOARD COLUMNS
     const _columns = _.cloneDeep(columns);
     _columns.push({
       id: uuidv4(),

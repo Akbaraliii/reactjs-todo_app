@@ -10,3 +10,18 @@ const AppBar = () => {
 };
 
 export default AppBar;
+
+// .app__navbar-logo {
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+
+//   img {
+//     width: 150px;
+//     height: 50px;
+
+//     @media screen and (min-width: 2000px) {
+//       width: 200px;
+//       height: 100px;
+//     }
+//   }
