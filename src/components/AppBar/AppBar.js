@@ -1,10 +1,10 @@
-import React from 'react';
-import './AppBar.scss';
+import React from "react";
+import "./AppBar.scss";
 
 const AppBar = () => {
   return (
     <>
-      <nav className='navbar-app'>algorima</nav>
+      <nav className='navbar-app'>TODO</nav>
     </>
   );
 };
